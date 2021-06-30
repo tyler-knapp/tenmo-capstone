@@ -40,18 +40,15 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
     }
 
     @Test
-    public void list_balance_by_username() {
+    public void list_accounts_by_username() {
         List<Account> originalAccount = accountDAO.getAccount(TEST_USERNAME);
         addAccount(new Account(0, 1, 1000.00 , TEST_USERNAME));
 
         List<Account> newAccount = accountDAO.getAccount(TEST_USERNAME);
 
         Assert.assertEquals(originalAccount.size() + 1, newAccount.size());
-
-
-
-
-
+        Account account = testAccount(0, 1 , 1000.00 , TEST_USERNAME);
+        Assert.assertEquals(TEST_USERNAME , account.getUsername() );
 
     }
 
