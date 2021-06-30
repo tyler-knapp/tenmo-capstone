@@ -8,15 +8,17 @@ public class Account {
     private int accountId;
     private int userId;
     private double balance;
+    private String username;
 
     public Account(){
 
     }
 
-    public Account(int accountId, int userId, double balance){
+    public Account(int accountId, int userId, double balance , String username){
         this.accountId = accountId;
         this.userId = userId;
         this.balance = balance;
+        this.username = username;
     }
 
     public long getAccountId() {
@@ -43,5 +45,12 @@ public class Account {
         this.balance = balance;
     }
 
+   public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
 

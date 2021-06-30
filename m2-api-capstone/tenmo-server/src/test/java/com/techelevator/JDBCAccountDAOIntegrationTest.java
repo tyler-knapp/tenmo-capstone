@@ -24,10 +24,10 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
 
     @Test
     public void list_balance_by_username(){
-        List<Account> originalAccount = accountDAO.getAccountBalance("test");
-        addAccount(new Account(0, 1, 1000.00));
+        List<Account> originalAccount = accountDAO.getAccountBalance("username");
+        addAccount(new Account(0, 1, 1000.00 , "username"));
 
-        List<Account> newAccount = accountDAO.getAccountBalance("test");
+        List<Account> newAccount = accountDAO.getAccountBalance("username");
 
         Assert.assertEquals(originalAccount.size() + 1, newAccount.size());
 
@@ -39,5 +39,7 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
                 "VALUES(DEFAULT, (SELECT user_id FROM users WHERE username = ?), ?)";
         jdbcTemplate.update(sql, account.getUserId(), account.getBalance());
     }
+
+
 
 }

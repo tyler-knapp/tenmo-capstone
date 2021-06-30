@@ -38,6 +38,7 @@ public class JDBCAccountDAO implements AccountDAO{
         account.setAccountId(row.getInt("account_id"));
         account.setUserId(row.getInt("user_id"));
         account.setBalance(row.getDouble("balance"));
+        account.setUsername(row.getString("username"));
         return account;
     }
 }
