@@ -22,7 +22,7 @@ public class AccountController {
 
     public List<Account> getAccountBalance (Principal principal){
         String username = principal.getName();
-        return accountDAO.getAccountBalance(username);
+        return accountDAO.getAccount(username);
 }
 
 
