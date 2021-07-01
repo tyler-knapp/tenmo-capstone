@@ -25,7 +25,7 @@ public class AccountService {
         headers.setBearerAuth(currentUser.getToken());
         HttpEntity entity = new HttpEntity(headers);
 
-        Account account = restTemplate.exchange(BASE_URL + "accounts", HttpMethod.GET, entity, Account.class).getBody();
+        Account account = restTemplate.exchange(BASE_URL +"accounts" , HttpMethod.GET, entity, Account.class).getBody();
 
         return account;
 

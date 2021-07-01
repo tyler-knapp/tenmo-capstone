@@ -7,6 +7,7 @@ import com.techelevator.tenmo.auth.services.AuthenticationServiceException;
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.ConsoleService;
+import org.springframework.web.client.ResourceAccessException;
 
 public class App {
 
@@ -24,7 +25,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private static final String MAIN_MENU_OPTION_LOGIN = "Login as different user";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_VIEW_BALANCE, MAIN_MENU_OPTION_SEND_BUCKS, MAIN_MENU_OPTION_VIEW_PAST_TRANSFERS, MAIN_MENU_OPTION_REQUEST_BUCKS, MAIN_MENU_OPTION_VIEW_PENDING_REQUESTS, MAIN_MENU_OPTION_LOGIN, MENU_OPTION_EXIT };
 
-	private  AccountService accountService;
+	private AccountService accountService;
     private AuthenticatedUser currentUser;
     private ConsoleService console;
     private AuthenticationService authenticationService;
@@ -73,8 +74,13 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void viewCurrentBalance() {
-		Account account = accountService.getUserAccount();
-		console.showUserBalance(account);
+    	try{
+			Account account = accountService.getUserAccount();
+			console.showUserBalance(account);
+		} catch	(ResourceAccessException e){
+
+		}
+
 		
 	}
 
