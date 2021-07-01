@@ -42,28 +42,28 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
     @Test
     public void list_accounts_by_username() {
         List<Account> originalAccount = accountDAO.getAccount("user");
-        addAccount(new Account(0, 1, 1000.00 , "user"));
+        addAccount(new Account(0, 1, 1000.00 ));
 
         List<Account> newAccount = accountDAO.getAccount("user");
 
         Assert.assertEquals(originalAccount.size() + 1, newAccount.size());
-        Account account = testAccount(0, 1 , 1000.00 , "user");
-        Assert.assertEquals("user" , account.getUsername() );
+        Account account = testAccount(0, 1 , 1000.00);
+
 
     }
 
     private void addAccount(Account account){
         String sql = "INSERT INTO accounts(account_id, user_id, balance)" +
                 "VALUES(DEFAULT, (SELECT user_id FROM users WHERE username = ?), ?)";
-        jdbcTemplate.update(sql, account.getUsername(), account.getBalance());
+        jdbcTemplate.update(sql, "user", account.getBalance());
     }
 
-    private Account testAccount(int accountId , int userId, double balance , String username){
+    private Account testAccount(int accountId , int userId, double balance ){
         Account testAccount = new Account();
         testAccount.setAccountId(accountId);
         testAccount.setUserId(userId);
         testAccount.setBalance(balance);
-        testAccount.setUsername(username);
+        //testAccount.setUsername(username);
         return testAccount;
     }
 

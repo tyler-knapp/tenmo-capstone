@@ -20,7 +20,7 @@ public class JDBCAccountDAO implements AccountDAO{
 
     @Override
     public List<Account> getAccount(String username) {
-        String sql = "SELECT account_id , accounts.user_id , balance , username FROM accounts " +
+        String sql = "SELECT account_id , accounts.user_id , balance FROM accounts " +
                 "JOIN users ON accounts.user_id = users.user_id " +
                 "WHERE username = ?";
         SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, username);
@@ -38,7 +38,7 @@ public class JDBCAccountDAO implements AccountDAO{
         account.setAccountId(row.getInt("account_id"));
         account.setUserId(row.getInt("user_id"));
         account.setBalance(row.getDouble("balance"));
-        account.setUsername(row.getString("username"));
+        //account.setUsername(row.getString("username"));
         return account;
     }
 
