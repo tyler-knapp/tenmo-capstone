@@ -10,6 +10,8 @@ public interface UserDAO {
 
     User findByUsername(String username);
 
+    List<User> listAllUsersWhoAreNotTheCurrentUser(String currentUserUsername);
+
     int findIdByUsername(String username);
 
     boolean create(String username, String password);

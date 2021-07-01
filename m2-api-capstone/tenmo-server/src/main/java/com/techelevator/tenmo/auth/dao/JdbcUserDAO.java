@@ -45,6 +45,8 @@ public class JdbcUserDAO implements UserDAO {
         return users;
     }
 
+
+
     @Override
     public User findByUsername(String username) throws UsernameNotFoundException {
         String sql = "SELECT user_id, username, password_hash FROM users WHERE username ILIKE ?;";
@@ -53,6 +55,20 @@ public class JdbcUserDAO implements UserDAO {
             return mapRowToUser(rowSet);
             }
         throw new UsernameNotFoundException("User " + username + " was not found.");
+    }
+
+    @Override
+    public List<User> listAllUsersWhoAreNotTheCurrentUser(String currentUserUsername) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT user_id, username FROM users WHERE username != ? ";
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, currentUserUsername);
+
+        while(row.next()){
+            User user = mapRowToUser(row);
+            users.add(user);
+        }
+
+        return users;
     }
 
     @Override
