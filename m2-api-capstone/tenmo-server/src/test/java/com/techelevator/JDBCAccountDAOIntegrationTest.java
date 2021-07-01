@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.List;
 
 import static org.junit.Assert.assertNotEquals;
@@ -20,7 +21,6 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
     private AccountDAO accountDAO;
     private JdbcTemplate jdbcTemplate;
 
-    private static final String TEST_USERNAME = "username";
 
 
 
@@ -41,14 +41,14 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
 
     @Test
     public void list_accounts_by_username() {
-        List<Account> originalAccount = accountDAO.getAccount(TEST_USERNAME);
-        addAccount(new Account(0, 1, 1000.00 , TEST_USERNAME));
+        List<Account> originalAccount = accountDAO.getAccount("user");
+        addAccount(new Account(0, 1, 1000.00 , "user"));
 
-        List<Account> newAccount = accountDAO.getAccount(TEST_USERNAME);
+        List<Account> newAccount = accountDAO.getAccount("user");
 
         Assert.assertEquals(originalAccount.size() + 1, newAccount.size());
-        Account account = testAccount(0, 1 , 1000.00 , TEST_USERNAME);
-        Assert.assertEquals(TEST_USERNAME , account.getUsername() );
+        Account account = testAccount(0, 1 , 1000.00 , "user");
+        Assert.assertEquals("user" , account.getUsername() );
 
     }
 
