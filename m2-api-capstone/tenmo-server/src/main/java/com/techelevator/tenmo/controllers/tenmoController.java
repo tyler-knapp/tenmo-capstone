@@ -35,7 +35,7 @@ public class tenmoController {
 
 
     @RequestMapping(path = "/accounts", method = RequestMethod.GET)
-    public List<Account> getAccount(Principal principal) {
+    public Account getAccount(Principal principal) {
         return this.accountDAO.getAccount(principal.getName());
     }
 

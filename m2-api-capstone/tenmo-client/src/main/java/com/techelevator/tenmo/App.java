@@ -7,6 +7,8 @@ import com.techelevator.tenmo.auth.services.AuthenticationServiceException;
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.ConsoleService;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientResponseException;
 
 public class App {
 
@@ -73,9 +75,16 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void viewCurrentBalance() {
-		Account account = accountService.getUserAccount();
-		console.showUserBalance(account);
-		
+		try{
+			Account account = accountService.getUserAccount();
+			console.showUserBalance(account);
+		} catch (ResourceAccessException e) {
+			console.errorCannotConnect();
+		} catch (RestClientResponseException e) {
+			console.errorClientAcception(e.getRawStatusCode() , e.getStatusText());
+		}
+
+
 	}
 
 	private void viewTransferHistory() {

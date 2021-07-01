@@ -81,4 +81,14 @@ public class ConsoleService {
 		out.println("Your current account balance is: $ " + account.getBalance());
 		out.flush();
 	}
+
+	public void errorCannotConnect(){
+		out.println("Cannot connect to server.");
+		out.flush();
+	}
+
+	public void errorClientAcception(int statusCode , String message){
+		out.println(statusCode + " " + message);
+		out.flush();
+	}
 }
