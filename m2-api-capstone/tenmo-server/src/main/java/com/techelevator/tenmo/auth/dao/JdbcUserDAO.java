@@ -36,7 +36,7 @@ public class JdbcUserDAO implements UserDAO {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT user_id, username, password_hash FROM users;";
+        String sql = "SELECT user_id , username, password_hash FROM users;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
             User user = mapRowToUser(results);
@@ -57,19 +57,19 @@ public class JdbcUserDAO implements UserDAO {
         throw new UsernameNotFoundException("User " + username + " was not found.");
     }
 
-    @Override
-    public List<User> listAllUsersWhoAreNotTheCurrentUser(String currentUserUsername) {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT user_id, username FROM users WHERE username != ? ";
-        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, currentUserUsername);
-
-        while(row.next()){
-            User user = mapRowToUser(row);
-            users.add(user);
-        }
-
-        return users;
-    }
+//    @Override
+//    public List<User> listAllUsersWhoAreNotTheCurrentUser(String currentUserUsername) {
+//        List<User> users = new ArrayList<>();
+//        String sql = "SELECT user_id, username FROM users WHERE username != ? ";
+//        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, currentUserUsername);
+//
+//        while(row.next()){
+//            User user = mapRowToUser(row);
+//            users.add(user);
+//        }
+//
+//        return users;
+//    }
 
     @Override
     public boolean create(String username, String password) {

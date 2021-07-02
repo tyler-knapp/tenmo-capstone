@@ -1,11 +1,15 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.auth.models.AuthenticatedUser;
+import com.techelevator.tenmo.auth.models.User;
+import com.techelevator.tenmo.auth.models.UserCredentials;
 import com.techelevator.tenmo.models.Account;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -13,6 +17,8 @@ public class ConsoleService {
 	private Account account;
 	private PrintWriter out;
 	private Scanner in;
+	private UserCredentials userCredentials;
+	private AuthenticatedUser currentUser = new AuthenticatedUser();
 
 	public ConsoleService(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output, true);
@@ -90,5 +96,19 @@ public class ConsoleService {
 	public void errorClientAcception(int statusCode , String message){
 		out.println(statusCode + " " + message);
 		out.flush();
+	}
+
+	public void showAllUsersExceptCurrentUser(List<User> userList){
+		out.println("_________________________________________");
+		out.println("Users");
+		out.println("ID             Name");
+		out.println("_________________________________________");
+
+		for (int i = 0;  i < userList.size(); i ++ ){
+//			if (userList.get(i).getId().equals(currentUser.getUser().getId())){
+//				continue;
+//			}
+			out.println(userList.get(i).getId() + "          " +  userList.get(i).getUsername());
+		}
 	}
 }

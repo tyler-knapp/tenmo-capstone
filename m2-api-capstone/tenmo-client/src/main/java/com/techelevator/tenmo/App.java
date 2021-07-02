@@ -1,15 +1,19 @@
 package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.auth.models.AuthenticatedUser;
+import com.techelevator.tenmo.auth.models.User;
 import com.techelevator.tenmo.auth.models.UserCredentials;
 import com.techelevator.tenmo.auth.services.AuthenticationService;
 import com.techelevator.tenmo.auth.services.AuthenticationServiceException;
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.tenmo.services.UserService;
 import org.springframework.web.client.ResourceAccessException;
 
 import org.springframework.web.client.RestClientResponseException;
+
+import java.util.List;
 
 
 public class App {
@@ -30,11 +34,12 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private AccountService accountService;
     private AuthenticatedUser currentUser;
+    private UserService userService;
     private ConsoleService console;
     private AuthenticationService authenticationService;
 
     public static void main(String[] args) {
-    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
+    	App app = new App(new ConsoleService(System.in, System.out) , new AuthenticationService(API_BASE_URL ));
     	app.run();
     }
 
@@ -51,6 +56,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		registerAndLogin();
 
 		this.accountService = new AccountService(currentUser, API_BASE_URL);
+		this.userService = new UserService(currentUser, API_BASE_URL);
+
 		mainMenu();
 	}
 
@@ -99,7 +106,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void sendBucks() {
-		// TODO Auto-generated method stub
+		List<User> users = userService.getAllUsers();
+		console.showAllUsersExceptCurrentUser(users);
 		
 	}
 
