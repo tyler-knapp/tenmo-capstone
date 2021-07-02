@@ -107,7 +107,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void sendBucks() {
 		List<User> users = userService.getAllUsers();
-		console.showAllUsersExceptCurrentUser(users);
+		console.showAllUsersExceptCurrentUser(users, currentUser);
 		
 	}
 
