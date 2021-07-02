@@ -5,6 +5,7 @@ import com.techelevator.tenmo.models.Account;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -25,9 +26,9 @@ public class AccountService {
         headers.setBearerAuth(currentUser.getToken());
         HttpEntity entity = new HttpEntity(headers);
 
-        Account account = restTemplate.exchange(BASE_URL +"accounts" , HttpMethod.GET, entity, Account.class).getBody();
+        Account account = restTemplate.exchange(BASE_URL + "accounts" , HttpMethod.GET, entity, Account.class).getBody();
 
         return account;
-
     }
+
 }

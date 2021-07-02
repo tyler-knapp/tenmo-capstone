@@ -5,6 +5,9 @@ import com.techelevator.tenmo.auth.models.AuthenticatedUser;
 import com.techelevator.tenmo.auth.models.User;
 import com.techelevator.tenmo.auth.models.UserCredentials;
 import com.techelevator.tenmo.models.Account;
+import io.cucumber.java.sl.In;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientResponseException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -91,23 +94,70 @@ public class ConsoleService {
 		out.flush();
 	}
 
-	public void errorClientAcception(int statusCode , String message){
+	public void errorClientException(int statusCode , String message){
 		out.println(statusCode + " " + message);
 		out.flush();
 	}
 
-	//pass the username
+	//Passed the currentUser as an argument, before it was coming back null.
+	//Remembered that a console should only have the scanner in/out as instance variables
 	public void showAllUsersExceptCurrentUser(List<User> userList, AuthenticatedUser currentUser){
 		out.println("_________________________________________");
 		out.println("Users");
 		out.println("ID             Name");
 		out.println("_________________________________________");
 
+		Integer userChoice = null;
+		double userAmount = 0;
+		double userAmountChoice =0;
 		for (int i = 0;  i < userList.size(); i ++ ){
 			if (userList.get(i).getId().equals(currentUser.getUser().getId())){
 				continue;
 			}
 			out.println(userList.get(i).getId() + "          " +  userList.get(i).getUsername());
 		}
+		getUserIdOfToAccount();
+		getAmountToTransfer();
 	}
+
+	//if we wan to return an int we need to parse this string into that
+	public Integer getUserIdOfToAccount(){
+		Integer userChoice = null;
+		while(true){
+			out.flush();
+			try {
+				out.println("Enter ID of user you are sending to (0 to cancel): "  );
+				String userInput = in.nextLine();
+				userChoice = Integer.parseInt(userInput);
+				break;
+			} catch (ResourceAccessException e) {
+				errorCannotConnect();
+			} catch (RestClientResponseException e) {
+				errorClientException(e.getRawStatusCode() , e.getStatusText());
+			}
+		}
+		return userChoice;
+	}
+
+	public Double getAmountToTransfer(){
+		Double userChoice = null;
+		while(true){
+			out.flush();
+			try {
+				out.println("Enter Amount: "  );
+				String userInput = in.nextLine();
+				userChoice = Double.parseDouble(userInput);
+				break;
+			} catch (ResourceAccessException e) {
+				errorCannotConnect();
+			} catch (RestClientResponseException e) {
+				errorClientException(e.getRawStatusCode() , e.getStatusText());
+			}
+		}
+		return userChoice;
+	}
+
+
+
+
 }

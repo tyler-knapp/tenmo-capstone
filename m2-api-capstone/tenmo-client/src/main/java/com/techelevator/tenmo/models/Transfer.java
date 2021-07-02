@@ -10,16 +10,6 @@ public class Transfer {
     private int transferStatusId;
 
     public Transfer(){
-
-    }
-
-    public Transfer(int accountFrom, int accountTo, double amount, int transactionId, int transferTypeId, int transferStatusId){
-        this.accountFrom = accountFrom;
-        this.accountTo = accountTo;
-        this.amount = amount;
-        this.transactionId = transactionId;
-        this.transferStatusId = transferStatusId;
-        this.transferTypeId = transferTypeId;
     }
 
     public int getTransactionId() {

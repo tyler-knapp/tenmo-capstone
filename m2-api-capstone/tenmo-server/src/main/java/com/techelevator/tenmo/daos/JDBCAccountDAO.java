@@ -17,7 +17,6 @@ public class JDBCAccountDAO implements AccountDAO{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     @Override
     public Account getAccount(String username) {
         Account account = null;
@@ -27,8 +26,6 @@ public class JDBCAccountDAO implements AccountDAO{
                 "WHERE username = ?";
         SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, username);
 
-
-
         if (rows.next()) {
             account = new Account();
             account.setAccountId(rows.getInt("account_id"));
@@ -37,15 +34,38 @@ public class JDBCAccountDAO implements AccountDAO{
         }
         return account;
     }
-
-//    private Account accountsMapRow(SqlRowSet row){
-//        Account account = new Account();
-//        account.setAccountId(row.getInt("account_id"));
-//        account.setUserId(row.getInt("user_id"));
-//        account.setBalance(row.getDouble("balance"));
-//        //account.setUsername(row.getString("username"));
-//        return account;
+//
+//    @Override
+//    public double addToAccount(int userToId, double amount) {
+//        Account account = findAccountById(userToId);
+//        //double newAccountBalanace = account.getBalance()
+//        return 0;
+//    }
+//
+//    @Override
+//    public double subtractFromAccount(int userFrom, double amount) {
+//        return 0;
 //    }
 
+
+    private Account accountsMapRow(SqlRowSet row){
+        Account account = new Account();
+        account.setAccountId(row.getInt("account_id"));
+        account.setUserId(row.getInt("user_id"));
+        account.setBalance(row.getDouble("balance"));
+        //account.setUsername(row.getString("username"));
+        return account;
+    }
+
+    @Override
+    public Account findAccountById(int id) {
+        Account account = null;
+        String sql = "SELECT account_id, user_id, balance FROM accounts WHERE account_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+        if (results.next()) {
+            account = accountsMapRow(results);
+        }
+        return account;
+    }
 
 }

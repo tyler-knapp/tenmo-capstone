@@ -26,10 +26,8 @@ public class UserService {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(currentUser.getToken());
         HttpEntity entity = new HttpEntity(headers);
-     User[] users = restTemplate.exchange(BASE_URL + "users" , HttpMethod.GET , entity ,  User[].class).getBody();
+        User[] users = restTemplate.exchange(BASE_URL + "users" , HttpMethod.GET , entity ,  User[].class).getBody();
 
-     return Arrays.asList(users);
+        return Arrays.asList(users);
     }
-
-
 }

@@ -6,8 +6,10 @@ import com.techelevator.tenmo.auth.models.UserCredentials;
 import com.techelevator.tenmo.auth.services.AuthenticationService;
 import com.techelevator.tenmo.auth.services.AuthenticationServiceException;
 import com.techelevator.tenmo.models.Account;
+import com.techelevator.tenmo.models.Transfer;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.tenmo.services.TransferService;
 import com.techelevator.tenmo.services.UserService;
 import org.springframework.web.client.ResourceAccessException;
 
@@ -33,6 +35,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_VIEW_BALANCE, MAIN_MENU_OPTION_SEND_BUCKS, MAIN_MENU_OPTION_VIEW_PAST_TRANSFERS, MAIN_MENU_OPTION_REQUEST_BUCKS, MAIN_MENU_OPTION_VIEW_PENDING_REQUESTS, MAIN_MENU_OPTION_LOGIN, MENU_OPTION_EXIT };
 
 	private AccountService accountService;
+	private TransferService transferService;
     private AuthenticatedUser currentUser;
     private UserService userService;
     private ConsoleService console;
@@ -57,6 +60,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 		this.accountService = new AccountService(currentUser, API_BASE_URL);
 		this.userService = new UserService(currentUser, API_BASE_URL);
+		this.transferService = new TransferService(currentUser, API_BASE_URL);
 
 		mainMenu();
 	}
@@ -91,7 +95,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		} catch (ResourceAccessException e) {
 			console.errorCannotConnect();
 		} catch (RestClientResponseException e) {
-			console.errorClientAcception(e.getRawStatusCode() , e.getStatusText());
+			console.errorClientException(e.getRawStatusCode() , e.getStatusText());
 		}
 	}
 
@@ -106,9 +110,20 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void sendBucks() {
-		List<User> users = userService.getAllUsers();
-		console.showAllUsersExceptCurrentUser(users, currentUser);
-		
+    	//get a list of users to send money to.
+    	try {
+
+			List<User> users = userService.getAllUsers();
+			console.showAllUsersExceptCurrentUser(users, currentUser);
+			transferService.updatingTransfer();
+
+			//String userChoice = console.getUserIdOfToAccount();
+
+		} catch (ResourceAccessException e) {
+			console.errorCannotConnect();
+		} catch (RestClientResponseException e) {
+			console.errorClientException(e.getRawStatusCode() , e.getStatusText());
+		}
 	}
 
 	private void requestBucks() {
