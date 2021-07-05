@@ -112,12 +112,11 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private void sendBucks() {
     	//get a list of users to send money to.
     	try {
-
 			List<User> users = userService.getAllUsers();
 			console.showAllUsersExceptCurrentUser(users, currentUser);
-			transferService.updatingTransfer();
-
-			//String userChoice = console.getUserIdOfToAccount();
+			Integer userChoiceForToAccount = console.getUserIdOfToAccount();
+			Double userChoiceForTransferAmount = console.getAmountToTransfer();
+			//Transfer transfer = transferService.createTransfer();
 
 		} catch (ResourceAccessException e) {
 			console.errorCannotConnect();

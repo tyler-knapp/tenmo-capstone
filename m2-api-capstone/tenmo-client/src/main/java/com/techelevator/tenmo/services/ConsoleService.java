@@ -5,6 +5,7 @@ import com.techelevator.tenmo.auth.models.AuthenticatedUser;
 import com.techelevator.tenmo.auth.models.User;
 import com.techelevator.tenmo.auth.models.UserCredentials;
 import com.techelevator.tenmo.models.Account;
+import com.techelevator.tenmo.models.Transfer;
 import io.cucumber.java.sl.In;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
@@ -90,7 +91,7 @@ public class ConsoleService {
 	}
 
 	public void errorCannotConnect(){
-		out.println("Cannot connect to server.");
+		out.println("Cannot connect to server. Connection refused");
 		out.flush();
 	}
 
@@ -107,17 +108,12 @@ public class ConsoleService {
 		out.println("ID             Name");
 		out.println("_________________________________________");
 
-		Integer userChoice = null;
-		double userAmount = 0;
-		double userAmountChoice =0;
 		for (int i = 0;  i < userList.size(); i ++ ){
 			if (userList.get(i).getId().equals(currentUser.getUser().getId())){
 				continue;
 			}
 			out.println(userList.get(i).getId() + "          " +  userList.get(i).getUsername());
 		}
-		getUserIdOfToAccount();
-		getAmountToTransfer();
 	}
 
 	//if we wan to return an int we need to parse this string into that
@@ -128,7 +124,12 @@ public class ConsoleService {
 			try {
 				out.println("Enter ID of user you are sending to (0 to cancel): "  );
 				String userInput = in.nextLine();
-				userChoice = Integer.parseInt(userInput);
+
+				try {
+					userChoice = Integer.parseInt(userInput);
+				} catch(NumberFormatException e) {
+					out.println(System.lineSeparator() + "*** " + userInput + " is not valid ***" + System.lineSeparator());
+				}
 				break;
 			} catch (ResourceAccessException e) {
 				errorCannotConnect();
@@ -137,6 +138,15 @@ public class ConsoleService {
 			}
 		}
 		return userChoice;
+	}
+
+	public void printViewTransferScreen(Transfer transfer, AuthenticatedUser currentUser, Account account){
+		out.println("-------------------------------------------");
+		out.println("Transfers");
+		out.println("ID          From/To                 Amount");
+		out.println("-------------------------------------------");
+		out.println(currentUser.getUser().getId() + "        From: " + currentUser.getUser().getUsername() +" "+ transfer.getAmount() );
+		out.println(transfer.getAccountTo() + "          To: " + transfer.getUserTo() + " " + account.getBalance() );
 	}
 
 	public Double getAmountToTransfer(){

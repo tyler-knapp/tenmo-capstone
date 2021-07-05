@@ -31,4 +31,17 @@ public class AccountService {
         return account;
     }
 
+    //What are we returning? What are we passing as arguments?
+    //update account using user_id and amount?
+    public void updateAccount(Account account){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Account> entity = new HttpEntity<Account>(account, headers);
+
+        restTemplate.put(BASE_URL + "accounts/" + account.getAccountId(), entity);
+    }
+    //Two separate methods for accountTo and AccountFrom?
+
+
 }

@@ -1,6 +1,7 @@
 package com.techelevator.tenmo.daos;
 
 import com.techelevator.tenmo.models.Account;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,37 @@ public class JDBCAccountDAO implements AccountDAO{
         }
         return account;
     }
+
+    @Override
+    public double addAmount(int transferTo, double amount) {
+        Account account  = findAccountById(transferTo);
+        String sql = "UPDATE accounts " +
+                "SET balance = (balance + ?) " +
+                "WHERE account_id = (SELECT account_id FROM accounts " +
+                "WHERE user_id = ?)";
+
+        try{
+            jdbcTemplate.update(sql, amount, transferTo);
+        } catch (DataAccessException e){
+            System.out.println("Error accessing Data");
+        }
+        return account.getBalance();
+    }
+
+    @Override
+    public double withdrawAmount(int transferFrom, double amount) {
+        Account account  = findAccountById(transferFrom);
+        String sql = "UPDATE accounts " +
+                "SET balance = (balance - ?) " +
+                "WHERE account_id = (SELECT account_id FROM accounts " +
+                "WHERE user_id = ?)";
+        try{
+            jdbcTemplate.update(sql, amount, transferFrom);
+        } catch (DataAccessException e){
+            System.out.println("Error accessing Data");
+        }
+        return account.getBalance();
+    }
 //
 //    @Override
 //    public double addToAccount(int userToId, double amount) {
@@ -53,7 +85,6 @@ public class JDBCAccountDAO implements AccountDAO{
         account.setAccountId(row.getInt("account_id"));
         account.setUserId(row.getInt("user_id"));
         account.setBalance(row.getDouble("balance"));
-        //account.setUsername(row.getString("username"));
         return account;
     }
 

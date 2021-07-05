@@ -6,12 +6,17 @@ import java.util.List;
 
 public interface AccountDAO {
 
-    //Questioning whether to pass in a userId or a accountId maybe userName through a JOIN?
+
     Account getAccount(String username);
 
 //    double addToAccount(int userTo, double amount);
 //
 //    double subtractFromAccount(int userFrom, double amount);
+
+    //Would this make more sense to these in the transfer class?
+    public double withdrawAmount(int transferFrom, double amount);
+
+    public double addAmount(int transferFrom, double amount);
 
     Account findAccountById(int id);
 

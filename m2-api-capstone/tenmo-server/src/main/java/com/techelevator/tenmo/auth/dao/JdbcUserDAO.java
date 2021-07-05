@@ -16,6 +16,7 @@ import java.util.List;
 public class JdbcUserDAO implements UserDAO {
 
     private static final BigDecimal STARTING_BALANCE = new BigDecimal("1000.00");
+
     private JdbcTemplate jdbcTemplate;
 
     public JdbcUserDAO(JdbcTemplate jdbcTemplate) {
@@ -44,8 +45,6 @@ public class JdbcUserDAO implements UserDAO {
         }
         return users;
     }
-
-
 
     @Override
     public User findByUsername(String username) throws UsernameNotFoundException {
