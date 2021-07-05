@@ -2,31 +2,11 @@ package com.techelevator.tenmo.models;
 
 public class Transfer {
 
-    private int transferId;
+
     private int accountFrom;
     private int accountTo;
     private double amount;
-    private int transferTypeId;
-    private int transferStatusId;
-//    private String userTo;
-//    private String userFrom;
-
-    public Transfer(){
-
-    }
-
-    public Transfer(int accountFrom, int accountTo, double amount){
-        this.accountFrom = accountFrom;
-        this.accountTo = accountTo;
-        this.amount = amount;
-    }
-
-    public Transfer(int transferId, int accountFrom, int accountTo, double amount){
-        this.transferId = transferId;
-        this.accountFrom = accountFrom;
-        this.accountTo = accountTo;
-        this.amount = amount;
-    }
+    private int transferId;
 
     public int getTransferId() {
         return transferId;
@@ -36,20 +16,14 @@ public class Transfer {
         this.transferId = transferId;
     }
 
-    public int getTransferTypeId() {
-        return transferTypeId;
+    public Transfer(){
+
     }
 
-    public void setTransferTypeId(int transferTypeId) {
-        this.transferTypeId = transferTypeId;
-    }
-
-    public int getTransferStatusId() {
-        return transferStatusId;
-    }
-
-    public void setTransferStatusId(int transferStatusId) {
-        this.transferStatusId = transferStatusId;
+    public Transfer(int accountFrom, int accountTo, double amount){
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
+        this.amount = amount;
     }
 
     public int getAccountFrom() {
@@ -75,20 +49,4 @@ public class Transfer {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
-//    public String getUserTo() {
-//        return userTo;
-//    }
-//
-//    public void setUserTo(String userTo) {
-//        this.userTo = userTo;
-//    }
-//
-//    public String getUserFrom() {
-//        return userFrom;
-//    }
-//
-//    public void setUserFrom(String userFrom) {
-//        this.userFrom = userFrom;
-//    }
 }

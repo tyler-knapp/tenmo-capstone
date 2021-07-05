@@ -37,15 +37,16 @@ public class JDBCAccountDAO implements AccountDAO{
     }
 
     @Override
-    public double addAmount(int transferTo, double amount) {
-        Account account  = findAccountById(transferTo);
+    public double addAmount(String username, double amount) {
+        Account account  = getAccount(username);
+
         String sql = "UPDATE accounts " +
                 "SET balance = (balance + ?) " +
                 "WHERE account_id = (SELECT account_id FROM accounts " +
-                "WHERE user_id = ?)";
+                "WHERE user_id = (SELECT user_id FROM users WHERE username = ?))";
 
         try{
-            jdbcTemplate.update(sql, amount, transferTo);
+            jdbcTemplate.update(sql, amount, username);
         } catch (DataAccessException e){
             System.out.println("Error accessing Data");
         }
@@ -53,14 +54,14 @@ public class JDBCAccountDAO implements AccountDAO{
     }
 
     @Override
-    public double withdrawAmount(int transferFrom, double amount) {
-        Account account  = findAccountById(transferFrom);
+    public double withdrawAmount(String username, double amount) {
+        Account account  = getAccount(username);
         String sql = "UPDATE accounts " +
                 "SET balance = (balance - ?) " +
                 "WHERE account_id = (SELECT account_id FROM accounts " +
                 "WHERE user_id = ?)";
         try{
-            jdbcTemplate.update(sql, amount, transferFrom);
+            jdbcTemplate.update(sql, amount, username);
         } catch (DataAccessException e){
             System.out.println("Error accessing Data");
         }
@@ -98,5 +99,10 @@ public class JDBCAccountDAO implements AccountDAO{
         }
         return account;
     }
+
+//    @Override
+//    public double subtractFromAccount(String userFromUserName, double amount) {
+//        return 0;
+//    }
 
 }

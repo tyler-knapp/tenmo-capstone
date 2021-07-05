@@ -40,21 +40,28 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
 
     @Test
     public void subtract_amount_from_account(){
-        User user = getUser("testUser");
-        addUser(user);
-        //1002 is actually in our user table
-        //Is there a way to incorporate dummy data here?
-        //Should we do that?
-        Account account = getAccountByUserId(1002 ,user);
-        createNewTestAccount(account);
+        //ARRANGE
+        User originalUser;
+        double originalAccount = accountDAO.addAmount("test", 12);
 
-        double newBalance = accountDAO.withdrawAmount(1004, 100);
+        //TEST
+        double newBalance = accountDAO.addAmount("testUsername", 100);
 
-        Assert.assertTrue( account.getBalance() > newBalance);
+        //ASSERTS
+
+        Assert.assertEquals(100, newBalance, 0.9);
+
     }
 
     @Test
     public void get_account_by_username() {
+        Account account = getAccount("testUserName",1000);
+        //createNewTestAccount(account);
+
+        Account newAccount = accountDAO.getAccount(account.getUsername());
+
+        Assert.assertNotNull(newAccount);
+
     }
 
 //    private Account getAccount(int userId ){
@@ -77,18 +84,28 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
         User testUser = new User();
         testUser.setUsername(username);
         testUser.setPassword("password");
-        //testUser.setId((long)100);
-        //testUser.setActivated(true);
+
         return testUser;
     }
 
-    private void createNewTestAccount(Account account){
-        String sql = "INSERT INTO accounts(account_id, user_id, balance) " +
-                "VALUES(DEFAULT, ?, ?) RETURNING account_id";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, account.getUserId(), account.getBalance());
-        rowSet.next();
-        account.setAccountId(rowSet.getInt("account_id"));
+    private Account createNewTestAccount(Account account){
+        //Does creating a new account make sense?
+        Integer newAccountId;
+        String sql = "INSERT INTO accounts( user_id , balance) " +
+                "VALUES(?, ?) RETURNING account_id";
+        //Not sure if this should be jdbc.update?
+        newAccountId = jdbcTemplate.update(sql, account.getUserId(), account.getBalance());
+        account.setAccountId(newAccountId);
 
+        return account;
+    }
+
+    private Account getAccount(String username, double balance) {
+        Account account = new Account();
+        account.setUsername(username);
+        account.setBalance(balance);
+        account.setUserId(1);
+        return account;
     }
 
     private void createTestUser(User user){

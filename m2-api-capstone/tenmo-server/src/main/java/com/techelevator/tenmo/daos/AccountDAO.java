@@ -9,16 +9,20 @@ public interface AccountDAO {
 
     Account getAccount(String username);
 
-//    double addToAccount(int userTo, double amount);
-//
-//    double subtractFromAccount(int userFrom, double amount);
-
-    //Would this make more sense to these in the transfer class?
-    public double withdrawAmount(int transferFrom, double amount);
-
-    public double addAmount(int transferFrom, double amount);
+    //Account getAccountByUsername(String username);
 
     Account findAccountById(int id);
+
+//    double addToAccount(String userToUsername, double amount);
+//
+ //   double subtractFromAccount(String userFromUserName, double amount);
+
+    //Would this make more sense to these in the transfer class?
+    public double withdrawAmount(String userFromUserName , double amount);
+
+    public double addAmount(String username, double amount);
+
+
 
 
 

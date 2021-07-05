@@ -15,12 +15,13 @@ public class Transfer {
 
     }
 
+    //unsure when we need a constructor that takes in these arguments?
     public Transfer(int accountFrom, int accountTo, double amount){
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.amount = amount;
     }
-
+    //Same with this one
     public Transfer(int transferId, int accountFrom, int accountTo, double amount){
         this.transferId = transferId;
         this.accountFrom = accountFrom;

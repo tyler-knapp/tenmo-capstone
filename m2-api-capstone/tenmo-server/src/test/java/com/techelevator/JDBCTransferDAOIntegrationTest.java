@@ -33,7 +33,6 @@ public class JDBCTransferDAOIntegrationTest extends DAOIntegrationTest{
         Transfer transfer = getTransferById(3017);
 
         //Assert.assertTrue( transfer.getTransferId() = 3017);
-
     }
 
 
