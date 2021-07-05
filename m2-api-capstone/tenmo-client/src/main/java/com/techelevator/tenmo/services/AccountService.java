@@ -31,6 +31,17 @@ public class AccountService {
         return account;
     }
 
+    public Account getAccountByUserId(int id){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(currentUser.getToken());
+        HttpEntity entity = new HttpEntity(headers);
+
+        Account account = restTemplate.exchange(BASE_URL + "accounts" , HttpMethod.GET, entity, Account.class).getBody();
+
+        return account;
+    }
+
     //What are we returning? What are we passing as arguments?
     //update account using user_id and amount?
     //Two separate methods for accountTo and AccountFrom? AKA two different PUTS?

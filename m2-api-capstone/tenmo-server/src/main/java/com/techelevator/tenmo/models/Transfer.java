@@ -21,12 +21,12 @@ public class Transfer {
         this.amount = amount;
     }
 
-//    public Transfer(int transferId, int accountFrom, int accountTo, double amount){
-//        this.transferId = transferId;
-//        this.accountFrom = accountFrom;
-//        this.accountTo = accountTo;
-//        this.amount = amount;
-//    }
+    public Transfer(int transferId, int accountFrom, int accountTo, double amount){
+        this.transferId = transferId;
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
+        this.amount = amount;
+    }
 
     public int getTransferId() {
         return transferId;

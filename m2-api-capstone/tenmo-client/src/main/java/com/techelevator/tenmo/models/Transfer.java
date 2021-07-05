@@ -8,8 +8,8 @@ public class Transfer {
     private double amount;
     private int transferTypeId;
     private int transferStatusId;
-    private String userTo;
-    private String userFrom;
+//    private String userTo;
+//    private String userFrom;
 
     public Transfer(){
 
@@ -76,19 +76,19 @@ public class Transfer {
         this.amount = amount;
     }
 
-    public String getUserTo() {
-        return userTo;
-    }
-
-    public void setUserTo(String userTo) {
-        this.userTo = userTo;
-    }
-
-    public String getUserFrom() {
-        return userFrom;
-    }
-
-    public void setUserFrom(String userFrom) {
-        this.userFrom = userFrom;
-    }
+//    public String getUserTo() {
+//        return userTo;
+//    }
+//
+//    public void setUserTo(String userTo) {
+//        this.userTo = userTo;
+//    }
+//
+//    public String getUserFrom() {
+//        return userFrom;
+//    }
+//
+//    public void setUserFrom(String userFrom) {
+//        this.userFrom = userFrom;
+//    }
 }

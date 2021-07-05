@@ -15,7 +15,7 @@ public interface TransferDAO {
 
     List<Transfer> findAll();
 
-    Transfer createTransfer(int id1, int id2, double amount);
+    Transfer createTransfer(Transfer transfer);
 
     Transfer getTransferById(int transferId);
 

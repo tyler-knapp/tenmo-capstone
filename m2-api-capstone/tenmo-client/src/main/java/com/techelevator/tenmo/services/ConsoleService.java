@@ -150,7 +150,9 @@ public class ConsoleService {
 
 
 		public void printuserFromDetails(AuthenticatedUser currentUser, Transfer transfer){
-			out.println( transfer.getTransferId() + "        From: " + transfer.getUserFrom() + " " + transfer.getAmount() );
+
+
+			out.println( transfer.getTransferId() + "        From: " + currentUser.getUser().getId() + " " + transfer.getAmount() );
 		}
 
 

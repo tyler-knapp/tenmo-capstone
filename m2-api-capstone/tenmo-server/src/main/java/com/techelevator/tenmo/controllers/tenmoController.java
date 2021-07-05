@@ -53,12 +53,12 @@ public class tenmoController {
     //Creates a transfer
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "transfers", method = RequestMethod.POST)
-    public Transfer sendTransfer(@RequestBody int id1, int id2, double amount) {
-        Transfer result = transferDAO.createTransfer( id1, id2, amount);
+    public Transfer sendTransfer(@RequestBody Transfer transfer) {
+        Transfer result = transferDAO.createTransfer( transfer);
         return result;
     }
 
-    @RequestMapping(path = "users/"+ "{id}" + "/transfers" , method = RequestMethod.GET)
+    @RequestMapping(path = "transfers/" + "{id}" , method = RequestMethod.GET)
     public Transfer getATransferById(@RequestBody @PathVariable int id){
         Transfer result = transferDAO.getTransferById(id);
         return result;

@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.sound.midi.Soundbank;
 import java.sql.SQLOutput;
+import java.util.Random;
 
 public class TransferService {
 
@@ -27,19 +28,25 @@ public class TransferService {
 
 
     public Transfer createTransfer(Transfer transfer){
-        //transfer = new Transfer()
 
         HttpHeaders header = new HttpHeaders();
-        header.setContentType(MediaType.APPLICATION_JSON);
-        //Not sure if we need have this token here vvv
-        header.setBearerAuth(currentUser.getToken());
-        HttpEntity<Transfer> entity = new HttpEntity(transfer, header);
 
-        transfer =  restTemplate.exchange(BASE_URL + "transfers", HttpMethod.POST, entity, Transfer.class).getBody();
-        return  transfer;
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.setBearerAuth(currentUser.getToken());
+
+        HttpEntity<Transfer> entity = new HttpEntity<Transfer>(transfer, header);
+
+        try{
+            restTemplate.exchange(BASE_URL + "transfers", HttpMethod.POST, entity, Transfer.class).getBody();
+        } catch (ResourceAccessException e){
+            console.errorCannotConnect();
+        } catch (RestClientResponseException e){
+            System.out.println(e.getRawStatusCode() + " " + e.getStatusText());
+        }
+        return transfer;
     }
 
-    private Transfer getATransferById(int id){
+    public Transfer getATransferById(int id){
         Transfer transfer = null;
         String endpoint = BASE_URL + "transfers/" + id;
         HttpHeaders header = new HttpHeaders();
@@ -57,5 +64,27 @@ public class TransferService {
             System.out.println(e.getRawStatusCode() + " " + e.getStatusText());
         }
         return transfer;
+    }
+
+    private Transfer makeTransfer(String CSV) {
+        String[] parsed = CSV.split(",");
+
+        // invalid input (
+        if (parsed.length < 3 || parsed.length > 4) {
+            return null;
+        }
+
+        // Add method does not include an id and only has 5 strings
+        if (parsed.length == 3) {
+            // Create a string version of the id and place into an array to be concatenated
+            String[] withId = new String[6];
+            String[] idArray = new String[] { new Random().nextInt(1000) + "" };
+            // place the id into the first position of the data array
+            System.arraycopy(idArray, 0, withId, 0, 1);
+            System.arraycopy(parsed, 0, withId, 1, 3);
+            parsed = withId;
+        }
+
+        return new Transfer(Integer.parseInt(parsed[0].trim()), Integer.parseInt(parsed[1].trim()), Double.parseDouble(parsed[2].trim()));
     }
 }
