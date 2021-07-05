@@ -10,11 +10,12 @@ public interface TransferDAO {
     //Simultaneous updates?
     //Two separate updates?
 
+
     List<Transfer> getListOfAllTransfersByAccountId(int accountFromId);
 
     List<Transfer> findAll();
 
-    Transfer createTransfer(Transfer transfer);
+    Transfer createTransfer(int id1, int id2, double amount);
 
     Transfer getTransferById(int transferId);
 

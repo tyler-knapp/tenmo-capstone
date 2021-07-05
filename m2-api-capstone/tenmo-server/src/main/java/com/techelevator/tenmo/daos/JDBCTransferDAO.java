@@ -55,8 +55,10 @@ public class JDBCTransferDAO implements TransferDAO {
     }
 
 
+    //Maybe check out taking the (int userFromId, int userToId, double amount)
     @Override
-    public Transfer createTransfer( Transfer transfer ) {
+    public Transfer createTransfer( int userFromId, int userToId, double amount ) {
+        Transfer transfer = new Transfer();
         Integer newId;
 
         String sql = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
@@ -64,7 +66,7 @@ public class JDBCTransferDAO implements TransferDAO {
                 "RETURNING transfer_id";
 
         //Look into Query For Object? I don't know
-            newId = jdbcTemplate.queryForObject(sql, Integer.class, transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount());
+            newId = jdbcTemplate.queryForObject(sql, Integer.class, userFromId, userToId, amount);
 
             transfer.setTransferId(newId);
 //            if(rows.next()){

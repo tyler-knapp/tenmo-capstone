@@ -33,6 +33,7 @@ public class AccountService {
 
     //What are we returning? What are we passing as arguments?
     //update account using user_id and amount?
+    //Two separate methods for accountTo and AccountFrom? AKA two different PUTS?
     public void updateAccount(Account account){
 
         HttpHeaders headers = new HttpHeaders();

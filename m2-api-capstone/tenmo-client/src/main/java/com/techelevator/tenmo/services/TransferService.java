@@ -25,13 +25,17 @@ public class TransferService {
         this.BASE_URL = BASE_URL;
     }
 
+
     public Transfer createTransfer(Transfer transfer){
+        //transfer = new Transfer()
+
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
+        //Not sure if we need have this token here vvv
         header.setBearerAuth(currentUser.getToken());
-        HttpEntity<Transfer> entity = new HttpEntity<Transfer>(header);
+        HttpEntity<Transfer> entity = new HttpEntity(transfer, header);
 
-        transfer = restTemplate.exchange(BASE_URL + "transfers", HttpMethod.POST, entity, Transfer.class).getBody();
+        transfer =  restTemplate.exchange(BASE_URL + "transfers", HttpMethod.POST, entity, Transfer.class).getBody();
         return  transfer;
     }
 

@@ -114,9 +114,16 @@ private static final String API_BASE_URL = "http://localhost:8080/";
     	try {
 			List<User> users = userService.getAllUsers();
 			console.showAllUsersExceptCurrentUser(users, currentUser);
+			//Keep it parsed? Or should it stay a string?
+			Integer userId = currentUser.getUser().getId();
 			Integer userChoiceForToAccount = console.getUserIdOfToAccount();
 			Double userChoiceForTransferAmount = console.getAmountToTransfer();
-			//Transfer transfer = transferService.createTransfer();
+			console.printViewTransferScreen();
+
+			Transfer transfer = new Transfer(userId,userChoiceForToAccount, userChoiceForTransferAmount);
+			transferService.createTransfer(transfer);
+			console.printuserFromDetails(currentUser, transfer);
+			//Does this need a transfer in the argument? transfer
 
 		} catch (ResourceAccessException e) {
 			console.errorCannotConnect();

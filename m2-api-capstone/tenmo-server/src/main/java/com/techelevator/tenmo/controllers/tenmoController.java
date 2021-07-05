@@ -53,8 +53,8 @@ public class tenmoController {
     //Creates a transfer
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "transfers", method = RequestMethod.POST)
-    public Transfer sendTransfer(@RequestBody Transfer transfer) {
-        Transfer result = transferDAO.createTransfer( transfer );
+    public Transfer sendTransfer(@RequestBody int id1, int id2, double amount) {
+        Transfer result = transferDAO.createTransfer( id1, id2, amount);
         return result;
     }
 

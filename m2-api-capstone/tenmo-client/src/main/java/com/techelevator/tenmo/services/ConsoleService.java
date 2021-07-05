@@ -140,14 +140,24 @@ public class ConsoleService {
 		return userChoice;
 	}
 
-	public void printViewTransferScreen(Transfer transfer, AuthenticatedUser currentUser, Account account){
+	public void printViewTransferScreen() {
 		out.println("-------------------------------------------");
 		out.println("Transfers");
 		out.println("ID          From/To                 Amount");
 		out.println("-------------------------------------------");
-		out.println(currentUser.getUser().getId() + "        From: " + currentUser.getUser().getUsername() +" "+ transfer.getAmount() );
-		out.println(transfer.getAccountTo() + "          To: " + transfer.getUserTo() + " " + account.getBalance() );
+		out.flush();
 	}
+
+
+		public void printuserFromDetails(AuthenticatedUser currentUser, Transfer transfer){
+			out.println( transfer.getTransferId() + "        From: " + transfer.getUserFrom() + " " + transfer.getAmount() );
+		}
+
+
+
+
+		//out.println(transfer.getAccountTo() + "          To: " + transfer.getUserTo() + " " + account.getBalance() );
+
 
 	public Double getAmountToTransfer(){
 		Double userChoice = null;
