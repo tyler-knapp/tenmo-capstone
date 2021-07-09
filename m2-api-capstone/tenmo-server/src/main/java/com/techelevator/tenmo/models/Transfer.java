@@ -15,13 +15,13 @@ public class Transfer {
 
     }
 
-    //unsure when we need a constructor that takes in these arguments?
+    //Unsure when we need a constructor that takes in these arguments?
     public Transfer(int accountFrom, int accountTo, double amount){
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.amount = amount;
     }
-    //Same with this one
+    //Same with this one. We are not using them. Are they used for integration testing? Only?
     public Transfer(int transferId, int accountFrom, int accountTo, double amount){
         this.transferId = transferId;
         this.accountFrom = accountFrom;

@@ -27,6 +27,13 @@ public class TransferService {
     }
 
 
+    //I think where we went wrong was mainly having everything we need for the deserialization and
+    //serialization of JSON. The body doesn't match what we are actually asking for.
+
+    //Additionally, I was confused if we retrieve information from this, if we could update account
+    //one, and account two. Or if these are three totally separate requests.
+
+    //Do the parameters in this createTransfer need to match the parameters on the Server-side?
     public Transfer createTransfer(Transfer transfer){
 
         HttpHeaders header = new HttpHeaders();
@@ -66,6 +73,7 @@ public class TransferService {
         return transfer;
     }
 
+    //Stole the code below from elsewhere in the capstone. Went down a silly rabbit hold here.
     private Transfer makeTransfer(String CSV) {
         String[] parsed = CSV.split(",");
 

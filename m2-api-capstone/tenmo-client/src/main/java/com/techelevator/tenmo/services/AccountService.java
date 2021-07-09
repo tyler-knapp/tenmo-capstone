@@ -31,6 +31,8 @@ public class AccountService {
         return account;
     }
 
+    //I don't think we would want to have this. Not a requirement and could pose security threats
+    //The GET and endpoint match above so it would not have executed anyways.
     public Account getAccountByUserId(int id){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

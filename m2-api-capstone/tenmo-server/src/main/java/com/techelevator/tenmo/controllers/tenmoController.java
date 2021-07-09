@@ -37,13 +37,13 @@ public class tenmoController {
         return userDAO.findAll();
     }
 
-    //returns a list of our transfers
+    //Returns a full list of all the transfers.
     @RequestMapping(path = "transfers", method = RequestMethod.GET)
     public List<Transfer> listTransfers(){
         return transferDAO.findAll();
     }
 
-    //Gets a user's account information.... account_id, username, balance)
+    //Retrieve's a user's account information.... account_id, username, balance)
     @RequestMapping(path = "accounts", method = RequestMethod.GET)
     public Account getAccount(Principal principal) {
         return accountDAO.getAccount(principal.getName());
@@ -51,10 +51,11 @@ public class tenmoController {
 
 
     //Creates a transfer
+    //Doesn't quite work.
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "transfers", method = RequestMethod.POST)
-    public Transfer sendTransfer(@RequestBody Transfer transfer) {
-        Transfer result = transferDAO.createTransfer( transfer);
+    public Transfer sendTransfer(@RequestBody Transfer transfer ) {
+        Transfer result = transferDAO.createTransfer( transfer );
         return result;
     }
 

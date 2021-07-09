@@ -54,7 +54,7 @@ public class JDBCTransferDAO implements TransferDAO {
         return transfers;
     }
 
-
+    //I'm not sure that taking in a transfer as a parameter argument makes sense.
     //Maybe check out taking the (int userFromId, int userToId, double amount)
     @Override
     public Transfer createTransfer( Transfer transfer ) {
@@ -68,6 +68,7 @@ public class JDBCTransferDAO implements TransferDAO {
             newId = jdbcTemplate.queryForObject(sql, Integer.class, transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount());
 
             transfer.setTransferId(newId);
+            //transfer.setAmount(amount);
 //            if(rows.next()){
 //                //transfer.setTransferId(rows.getInt("transfer_id"));
 //                transfer.setTransferTypeId(rows.getInt("transfer_type_id"));
@@ -85,6 +86,8 @@ public class JDBCTransferDAO implements TransferDAO {
         return transfer;
     }
 
+
+    //Gets a transfer by a transferID. this would be the GET to retrieve the transfer /details & info to print to the console.
     @Override
     public Transfer getTransferById(int transferId) {
         Transfer transfer = null;
@@ -110,6 +113,8 @@ public class JDBCTransferDAO implements TransferDAO {
         transfer.setAmount(results.getDouble("amount"));
         transfer.setTransferTypeId(results.getInt("transfer_type_id"));
         transfer.setTransferStatusId(results.getInt("transfer_status_id"));
+
+        //wrapped these in a try catch because they were not original to the table columns
         try {
             transfer.setUserFrom(results.getString("from_username"));
             transfer.setUserTo(results.getString("to_username"));

@@ -37,13 +37,20 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
         accountDAO = new JDBCAccountDAO(jdbcTemplate);
 
     }
+    //Of all the problems we encountered in this capstone, I think having more
+    //knowledge and confidence in integration testing as well as debugging would have
+    //gone a long way. It was hard for me to create tests and knowing if our tests are passing
+    //for the right reasons.
 
+
+
+    //We weren't sure how to test this. Would we create a test account and add money to it
+    //I think something else may be missing from our arrange section?
     @Test
     public void subtract_amount_from_account(){
         //ARRANGE
         User originalUser;
         double originalAccount = accountDAO.addAmount("test", 12);
-
         //TEST
         double newBalance = accountDAO.addAmount("testUsername", 100);
 
@@ -53,6 +60,8 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
 
     }
 
+
+    //To test  we would need to first create a test user, then a test account.
     @Test
     public void get_account_by_username() {
         Account account = getAccount("testUserName",1000);
@@ -72,6 +81,8 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
 //        return testAccount;
 //    }
 
+
+    //Why are we passing user here? Not sure what exactly we were thinking about for this one.
     private Account getAccountByUserId( int userId , User user){
         Account account = new Account();
         account.setUserId(userId);
@@ -100,6 +111,7 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
         return account;
     }
 
+
     private Account getAccount(String username, double balance) {
         Account account = new Account();
         account.setUsername(username);
@@ -108,6 +120,9 @@ public class JDBCAccountDAOIntegrationTest extends DAOIntegrationTest{
         return account;
     }
 
+
+    //This private method is the same as below, but has a returning.
+    //Not sure if it makes sense to take in a User to create a user?
     private void createTestUser(User user){
         String sql = "INSERT INTO users(user_id, username, password_hash) " +
                 "VALUES (DEFAULT, ?, ?) RETURNING user_id";

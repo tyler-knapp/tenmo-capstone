@@ -36,6 +36,8 @@ public class JDBCAccountDAO implements AccountDAO{
         return account;
     }
 
+    //Wanted to add the transfer amount to the toAccount
+    //Probably could have gone with userID here as well
     @Override
     public double addAmount(String username, double amount) {
         Account account  = getAccount(username);
@@ -53,6 +55,8 @@ public class JDBCAccountDAO implements AccountDAO{
         return account.getBalance();
     }
 
+    //Wanted to use this to take money away from the account that is sending the money
+    //Same as the add, probably could have gone with the userID for simplicity.
     @Override
     public double withdrawAmount(String username, double amount) {
         Account account  = getAccount(username);
